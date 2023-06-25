@@ -8,7 +8,7 @@ namespace USBKey
         {
             PropertyNameCaseInsensitive = true
         };
-
+        private static readonly string _fileName = "settings.json";
         private static SettingsData _optionsData = new();
         public static string DataFileName
         {
@@ -20,14 +20,14 @@ namespace USBKey
         }
         public static void Load()
         {
-            
-        DirectoryInfo dir = new(Directory.GetCurrentDirectory());
-            var optionsfile = dir.EnumerateFiles("options.json", SearchOption.AllDirectories).FirstOrDefault();
-            if (optionsfile != null)
+
+            DirectoryInfo dir = new(Directory.GetCurrentDirectory());
+            var settingsfile = dir.EnumerateFiles(_fileName, SearchOption.AllDirectories).FirstOrDefault();
+            if (settingsfile != null)
             {
                 try
                 {
-                    using FileStream optionsStream = File.OpenRead(optionsfile.FullName);
+                    using FileStream optionsStream = File.OpenRead(settingsfile.FullName);
                     var loadedDptions = JsonSerializer.Deserialize<SettingsData>(optionsStream, jsonOptions);
                     if (loadedDptions is not null)
                     {
@@ -39,6 +39,11 @@ namespace USBKey
                 {
                     Console.WriteLine(ex.Message);
                 }
+            }
+            else
+            {
+                Logger.Log(LogType.Error, $"File {_fileName} not found");
+                Environment.Exit(0);
             }
         }
     }

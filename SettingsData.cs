@@ -4,6 +4,7 @@
     {
         public string DataFileName { get; set; } = "data";
         public Keys Keys { get; set; } = new();
+        public string[] Messages { get; set; } = Array.Empty<string>();
     }
     internal class Keys
     {
