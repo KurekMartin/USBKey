@@ -1,6 +1,6 @@
 ﻿namespace USBKey
 {
-    internal class OptionsData
+    internal class SettingsData
     {
         public string DataFileName { get; set; } = "data";
         public Keys Keys { get; set; } = new();

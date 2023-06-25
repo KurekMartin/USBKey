@@ -9,16 +9,20 @@ namespace USBKey
         {
             Console.OutputEncoding = Encoding.UTF8;
             Console.ForegroundColor = ConsoleColor.White;
-            Options.Load();
+            Console.CursorVisible = false;
+            Settings.Load();
+
+            Console.Write("Insert USB ");
+            WaitingElement waitingElement = new(150);
 
             using IUsbEventWatcher usbEventWatcher = new UsbEventWatcher();
             Data? data = null;
             usbEventWatcher.UsbDriveMounted += (_, path) =>
             {
                 data = USB.GetDataFromDrive(path);
+                waitingElement.Stop();
                 MainLoop(data);
             };
-            Console.WriteLine("Insert USB");
 
             while (true) { };
         }
@@ -26,7 +30,7 @@ namespace USBKey
         static void MainLoop(Data? data)
         {
             Random random = new();
-            ProgressBar progressBar = new(30, "SampleTask");            
+            ProgressBar progressBar = new(30, "SampleTask");
             do
             {
                 progressBar.Value += random.Next(10);
@@ -39,11 +43,11 @@ namespace USBKey
         {
             if (data is not null)
             {
-                if (data.Key == Options.Keys.Correct)
+                if (data.Key == Settings.Keys.Correct)
                 {
                     Logger.Log(LogType.Info, "Správný klíč");
                 }
-                else if (data.Key == Options.Keys.Troll)
+                else if (data.Key == Settings.Keys.Troll)
                 {
                     Logger.Log(LogType.Info, "Trololololol");
                 }

@@ -22,7 +22,7 @@ namespace USBKey
         private static string FindDataFile(string root)
         {
             DirectoryInfo dir = new(root);
-            var file = dir.EnumerateFiles($"{Options.DataFileName}.json", SearchOption.AllDirectories).FirstOrDefault();
+            var file = dir.EnumerateFiles($"{Settings.DataFileName}.json", SearchOption.AllDirectories).FirstOrDefault();
             if (file != null)
             {
                 return file.FullName;
@@ -35,7 +35,7 @@ namespace USBKey
             try
             {
                 using FileStream dataFile = File.OpenRead(path);
-                data = JsonSerializer.Deserialize<Data>(dataFile, Options.jsonOptions);
+                data = JsonSerializer.Deserialize<Data>(dataFile, Settings.jsonOptions);
             }
             catch (Exception ex)
             {

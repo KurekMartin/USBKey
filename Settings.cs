@@ -2,14 +2,14 @@
 
 namespace USBKey
 {
-    internal static class Options
+    internal static class Settings
     {
         public static readonly JsonSerializerOptions jsonOptions = new()
         {
             PropertyNameCaseInsensitive = true
         };
 
-        private static OptionsData _optionsData = new();
+        private static SettingsData _optionsData = new();
         public static string DataFileName
         {
             get => _optionsData.DataFileName;
@@ -28,7 +28,7 @@ namespace USBKey
                 try
                 {
                     using FileStream optionsStream = File.OpenRead(optionsfile.FullName);
-                    var loadedDptions = JsonSerializer.Deserialize<OptionsData>(optionsStream, jsonOptions);
+                    var loadedDptions = JsonSerializer.Deserialize<SettingsData>(optionsStream, jsonOptions);
                     if (loadedDptions is not null)
                     {
                         _optionsData = loadedDptions;
