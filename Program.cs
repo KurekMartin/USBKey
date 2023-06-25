@@ -12,7 +12,7 @@ namespace USBKey
             Console.CursorVisible = false;
             Settings.Load();
 
-            Console.Write("Insert USB ");
+            Console.Write("Vložte USB klíč ");
             WaitingElement waitingElement = new(150);
 
             using IUsbEventWatcher usbEventWatcher = new UsbEventWatcher();
