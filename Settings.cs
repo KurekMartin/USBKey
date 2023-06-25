@@ -10,14 +10,9 @@ namespace USBKey
         };
         private static readonly string _fileName = "settings.json";
         private static SettingsData _optionsData = new();
-        public static string DataFileName
-        {
-            get => _optionsData.DataFileName;
-        }
-        public static Keys Keys
-        {
-            get => _optionsData.Keys;
-        }
+        public static string DataFileName { get => _optionsData.DataFileName; }
+        public static Keys Keys { get => _optionsData.Keys; }
+        public static Stage[] Stages { get => _optionsData.Stages; }
         public static void Load()
         {
 
