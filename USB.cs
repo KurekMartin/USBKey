@@ -39,6 +39,7 @@ namespace USBKey
             }
             catch (Exception ex)
             {
+                Logger.Log(LogType.Error, $"Chyba čtení dat {path}");
                 Console.WriteLine(ex.Message);
             }
             return data;
