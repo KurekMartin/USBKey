@@ -21,22 +21,40 @@ namespace USBKey
     {
         public StageType Type { get; set; } = StageType.Message;
         public string Text { get; set; } = string.Empty;
-        public uint Duration = 1000;
-        public uint DurationVariance = 0;
+        private int _duration = 1000;
+        public int Duration
+        {
+            get => _duration;
+            set
+            {
+                _duration = Math.Max(value, 0);
+            }
+        }
+        private int _stepDuration = 100;
+        public int StepDuration
+        {
+            get => _stepDuration;
+            set
+            {
+                _stepDuration = Math.Max(value, 1);
+            }
+        }
+        private int _stepDurationVariance = 0;
+        public int StepDurationVariance
+        {
+            get => _stepDurationVariance;
+            set
+            {
+                _stepDurationVariance = Math.Max(value, 0);
+            }
+        }
         private byte _progressBarLength = 30;
         public byte ProgressBarLength
         {
             get => _progressBarLength;
             set
             {
-                if(value < 10)
-                {
-                    _progressBarLength = 10;
-                }
-                else
-                {
-                    _progressBarLength = value;
-                }
+                _progressBarLength = Math.Max(value, (byte)10);
             }
         }
         private byte _maxStep = 10;
@@ -45,14 +63,7 @@ namespace USBKey
             get => _maxStep;
             set
             {
-                if (value < 1)
-                {
-                    _maxStep = 1;
-                }
-                else
-                {
-                    _maxStep = value;
-                }
+                _maxStep = Math.Max(value, (byte)1);
             }
         }
 
