@@ -11,7 +11,7 @@ namespace USBKey
         private readonly string[] _steps = { "◝", "◞", "◟", "◜" };
         private bool _stop = false;
         private bool _running = false;
-        private int _stepDuration = 10;
+        private int _stepDuration;
         public int StepDuration
         {
             get => _stepDuration;
@@ -27,10 +27,9 @@ namespace USBKey
             }
         }
 
-        public WaitingElement(int stepDuration)
+        public WaitingElement(int stepDuration = 150)
         {
             _stepDuration = stepDuration;
-            Task.Run(() => { Loop(); });
         }
 
         private void Loop()
@@ -48,6 +47,12 @@ namespace USBKey
             Console.Write(new string(' ', Console.WindowWidth - cursorStartPos));
             Console.WriteLine();
             _running = false;
+        }
+
+        public void Show()
+        {
+            _running = true;
+            Task.Run(() => { Loop(); });
         }
 
         public void Stop()
