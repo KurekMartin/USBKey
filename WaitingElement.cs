@@ -17,13 +17,7 @@ namespace USBKey
             get => _stepDuration;
             set
             {
-                if (_stepDuration != value)
-                {
-                    if (value < 0)
-                        _stepDuration = 0;
-                    else
-                        _stepDuration = value;
-                }
+                _stepDuration = Math.Max(value, 0);
             }
         }
 
