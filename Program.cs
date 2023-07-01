@@ -24,11 +24,11 @@ namespace USBKey
                 {
                     Maximize();
                 }
-                Logger.Log(LogType.Info, "Settings loaded");
+                Logger.Log(LogType.Info, Settings.Messages.SettingsLoaded);
             }
             else
             {
-                Logger.Log(LogType.Error, "Settings not loaded");
+                Logger.Log(LogType.Error, Settings.Messages.SettingsLoadError);
                 Environment.Exit(0);
             }
             
@@ -38,7 +38,7 @@ namespace USBKey
                 _random = new Random((int)Settings.Seed);
             }
 
-            Console.Write("Vložte USB klíč ");
+            Console.Write(Settings.Messages.InsertUSB);
             _waitingElement.Show();
 
             using IUsbEventWatcher usbEventWatcher = new UsbEventWatcher();
@@ -123,20 +123,20 @@ namespace USBKey
             {
                 if (data.Key == Settings.Keys.Correct)
                 {
-                    Logger.Log(LogType.Info, "Správný klíč");
+                    Logger.Log(LogType.Info, Settings.Messages.CorrectKey);
                 }
                 else if (data.Key == Settings.Keys.Troll)
                 {
-                    Logger.Log(LogType.Info, "Trololololol");
+                    Logger.Log(LogType.Info, Settings.Messages.TrollKey);
                 }
                 else
                 {
-                    Logger.Log(LogType.Info, "Špatně");
+                    Logger.Log(LogType.Info, Settings.Messages.IncorrectKey);
                 }
             }
             else
             {
-                Logger.Log(LogType.Error, "Chyba čtení");
+                Logger.Log(LogType.Error, Settings.Messages.ReadError);
             }
         }
         // Structure used by GetWindowRect

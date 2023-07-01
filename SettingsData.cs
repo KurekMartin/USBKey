@@ -1,7 +1,7 @@
 ﻿
 
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System.Text.Json.Serialization;
 
 namespace USBKey
 {
@@ -10,7 +10,10 @@ namespace USBKey
         public string DataFileName = "data";
         public Keys Keys = new();
         public int? Seed;
+        public bool Maximize = false;
+        [JsonProperty(Required = Required.Always)]
         public Stage[] Stages = Array.Empty<Stage>();
+        public Messages Messages = new Messages();
     }
     internal class Keys
     {
@@ -53,13 +56,13 @@ namespace USBKey
                 _stepProgressVariance = Math.Clamp(value, 0, 1);
             }
         }
-        private byte _progressBarLength = 30;
-        public byte ProgressBarLength
+        private int _progressBarLength = 30;
+        public int ProgressBarLength
         {
             get => _progressBarLength;
             set
             {
-                _progressBarLength = Math.Max(value, (byte)10);
+                _progressBarLength = Math.Max(value, 10);
             }
         }
         private byte _maxStepCount = 10;
@@ -68,7 +71,7 @@ namespace USBKey
             get => _maxStepCount;
             set
             {
-                _maxStepCount = Math.Max(value, (byte)1);
+                _maxStepCount = Math.Clamp(value, (byte)1, (byte)100);
             }
         }
 

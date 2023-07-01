@@ -38,7 +38,7 @@ namespace USBKey
                         Loaded = true;
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Loaded = false;
                     Console.WriteLine(ex.Message);
@@ -46,7 +46,7 @@ namespace USBKey
             }
             else
             {
-                Logger.Log(LogType.Error, $"File {_fileName} not found");
+                Logger.Log(LogType.Error, string.Format(Messages.FileNotFound, _fileName));
                 Environment.Exit(0);
             }
         }

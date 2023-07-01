@@ -14,7 +14,7 @@ namespace USBKey
             }
             else
             {
-                Logger.Log(LogType.Error, "Klíč nenalezen");
+                Logger.Log(LogType.Error, Settings.Messages.KeyNotFound);
             }
             return null;
         }
@@ -39,7 +39,7 @@ namespace USBKey
             }
             catch (Exception ex)
             {
-                Logger.Log(LogType.Error, $"Chyba čtení dat {path}");
+                Logger.Log(LogType.Error, string.Format(Settings.Messages.DataReadError, path));
                 Console.WriteLine(ex.Message);
             }
             return data;
