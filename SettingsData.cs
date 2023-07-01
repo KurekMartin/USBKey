@@ -12,7 +12,7 @@ namespace USBKey
         public int? Seed;
         public bool Maximize = false;
         public Stage[] Stages = Array.Empty<Stage>();
-        public Messages Messages = new Messages();
+        public Messages Messages = new();
     }
     internal class Keys
     {

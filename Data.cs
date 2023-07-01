@@ -2,6 +2,6 @@
 {
     internal class Data
     {
-        public string Key { get; set; } = string.Empty;
+        public string Key = string.Empty;
     }
 }
