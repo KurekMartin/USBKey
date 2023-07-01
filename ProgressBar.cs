@@ -43,11 +43,13 @@ namespace USBKey
             int empty = _length - full;
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write(new string('=', full));
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write(new string('-', empty));
             Console.ForegroundColor = color;
-            Console.Write(new string('-', empty) + "]");
-            
+            Console.Write("]");
 
-            if(Value == 100)
+
+            if (Value == 100)
             {
                 Thread.Sleep(1000);
                 ConsoleUtil.ClearCurrentLine();
