@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace USBKey
 
         public void Show()
         {
-            _running = true;
+            _stop = false;
             Task.Run(() => { Loop(); });
         }
 
