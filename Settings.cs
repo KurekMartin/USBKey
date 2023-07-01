@@ -17,6 +17,8 @@ namespace USBKey
         public static Stage[] Stages { get => _optionsData.Stages; }
         public static Messages Messages { get => _optionsData.Messages; }
         public static bool Maximize { get => _optionsData.Maximize; }
+        public static bool ShowTrollVideo { get => _optionsData.ShowTrollVideo; }
+        public static string TrollVideoFileName { get => _optionsData.TrollVideoFileName; }
         public static bool Loaded { get; private set; } = false;
         public static void Load()
         {

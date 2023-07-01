@@ -13,6 +13,8 @@ namespace USBKey
         public bool Maximize = false;
         public Stage[] Stages = Array.Empty<Stage>();
         public Messages Messages = new();
+        public bool ShowTrollVideo = false;
+        public string TrollVideoFileName = string.Empty;
     }
     internal class Keys
     {
