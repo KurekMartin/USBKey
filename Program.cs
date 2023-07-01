@@ -62,7 +62,7 @@ namespace USBKey
         static void ProcessProgress(Stage stage)
         {
 #if DEBUG
-            Console.WriteLine($"Type: {stage.Type} | Duration: {stage.Duration}ms | ProgressBarLen: {stage.ProgressBarLength}");
+            Logger.Log(LogType.Debug, $"Type: {stage.Type} | Duration: {stage.Duration}ms | ProgressBarLen: {stage.ProgressBarLength}");
             Stopwatch sw = Stopwatch.StartNew();
 #endif
             ProgressBar progressBar = new(stage.ProgressBarLength, stage.Text);
@@ -95,7 +95,7 @@ namespace USBKey
             } while (progressBar.Value != 100);
 #if DEBUG
             sw.Stop();
-            Console.WriteLine($"Total duration: {totalDuration}ms | Real duration: {sw.ElapsedMilliseconds}ms");
+            Logger.Log(LogType.Debug, $"Total duration: {totalDuration}ms | Real duration: {sw.ElapsedMilliseconds}ms");
 #endif
         }
 
