@@ -8,8 +8,8 @@ namespace USBKey
 {
     internal class ProgressBar
     {
-        private string _taskName;
-        private int _length = 20;
+        private readonly string _taskName;
+        private readonly int _length = 20;
         private int _value = 0;
         public int Value
         {
@@ -30,14 +30,15 @@ namespace USBKey
         }
         public ProgressBar(int length, string taskName)
         {
-            _length = length;
+            var maxLength = Console.WindowWidth - taskName.Length - 3;
+            _length = Math.Min(length, maxLength);
             _taskName = taskName;
         }
         private void Draw()
         {
             var color = Console.ForegroundColor;
             ConsoleUtil.ClearCurrentLine();
-            
+
             Console.Write($"{_taskName} [");
             int full = (int)Math.Round(Value / (100.0 / _length));
             int empty = _length - full;

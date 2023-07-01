@@ -15,6 +15,9 @@ namespace USBKey
         public static Keys Keys { get => _optionsData.Keys; }
         public static int? Seed { get => _optionsData.Seed; }
         public static Stage[] Stages { get => _optionsData.Stages; }
+        public static Messages Messages { get => _optionsData.Messages; }
+        public static bool Maximize { get => _optionsData.Maximize; }
+        public static bool Loaded { get; private set; } = false;
         public static void Load()
         {
 
@@ -24,17 +27,20 @@ namespace USBKey
             {
                 try
                 {
-                    using StreamReader optionsStream = File.OpenText(settingsfile.FullName);
-                    JsonSerializer serializer = new();
-                    var loadedDptions = (SettingsData?)serializer.Deserialize(optionsStream, typeof(SettingsData));
+                    var settings = File.ReadAllText(settingsfile.FullName);
+                    var loadedDptions = JsonConvert.DeserializeObject<SettingsData>(settings, new JsonSerializerSettings
+                    {
+                        MissingMemberHandling = MissingMemberHandling.Error,
+                    });
                     if (loadedDptions is not null)
                     {
                         _optionsData = loadedDptions;
-                        Logger.Log(LogType.Info, "Nastavení úspěšně načteno");
+                        Loaded = true;
                     }
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
+                    Loaded = false;
                     Console.WriteLine(ex.Message);
                 }
             }
