@@ -11,14 +11,14 @@ namespace USBKey
         private static Random _random = new();
         static void Main(string[] args)
         {
-            
+
             Console.OutputEncoding = Encoding.UTF8;
             Console.ForegroundColor = ConsoleColor.White;
             Console.CursorVisible = false;
-            
+
             Settings.Load();
 
-            if(Settings.Loaded)
+            if (Settings.Loaded)
             {
                 if (Settings.Maximize)
                 {
@@ -31,7 +31,7 @@ namespace USBKey
                 Logger.Log(LogType.Error, Settings.Messages.SettingsLoadError);
                 Environment.Exit(0);
             }
-            
+
 
             if (Settings.Seed is not null)
             {
@@ -58,6 +58,10 @@ namespace USBKey
 
             foreach (var stage in Settings.Stages)
             {
+#if DEBUG
+                Logger.Log(LogType.Debug, $"Type: {stage.Type} | Duration: {stage.Duration}ms | ProgressBarLen: {stage.ProgressBarLength}");
+                Stopwatch sw = Stopwatch.StartNew();
+#endif
                 switch (stage.Type)
                 {
                     case StageType.Message:
@@ -67,23 +71,35 @@ namespace USBKey
                         ProcessProgress(stage);
                         break;
                 }
+#if DEBUG
+                sw.Stop();
+                Logger.Log(LogType.Debug, $"Real duration: {sw.ElapsedMilliseconds}ms");
+#endif
             }
             ProcessData(data);
         }
 
         static void ProcessMessage(Stage stage)
         {
-            Console.WriteLine(stage.Text);
+            var showWaitAnim = stage.Duration > 2000;
+            Console.Write(stage.Text + " ");
+
+            if (showWaitAnim)
+            {
+                _waitingElement.Show();
+            }
             Thread.Sleep(stage.Duration);
+            _waitingElement.Stop();
+            if (!showWaitAnim)
+            {
+                Console.WriteLine();
+            }
         }
 
         static void ProcessProgress(Stage stage)
         {
-#if DEBUG
-            Logger.Log(LogType.Debug, $"Type: {stage.Type} | Duration: {stage.Duration}ms | ProgressBarLen: {stage.ProgressBarLength}");
-            Stopwatch sw = Stopwatch.StartNew();
-#endif
             ProgressBar progressBar = new(stage.ProgressBarLength, stage.Text);
+            stage.Duration -= progressBar.FinishWait;
             int stepDuration = stage.Duration / stage.MaxStepCount;
             int stepDurationVariance = (int)(stepDuration * stage.StepDurationVariance);
             int stepProgress = 100 / stage.MaxStepCount;
@@ -111,10 +127,6 @@ namespace USBKey
 
                 totalDuration += duration;
             } while (progressBar.Value != 100);
-#if DEBUG
-            sw.Stop();
-            Logger.Log(LogType.Debug, $"Total duration: {totalDuration}ms | Real duration: {sw.ElapsedMilliseconds}ms");
-#endif
         }
 
         static void ProcessData(Data? data)
