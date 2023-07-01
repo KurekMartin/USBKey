@@ -2,7 +2,7 @@
 {
     enum LogType
     {
-        Info, Warning, Error
+        Info, Warning, Error, Debug
     }
     internal static class Logger
     {
@@ -19,6 +19,9 @@
                     break;
                 case LogType.Error:
                     Console.ForegroundColor = ConsoleColor.Red;
+                    break;
+                case LogType.Debug:
+                    Console.ForegroundColor = ConsoleColor.Gray;
                     break;
             }
             Console.Write($"[{type.ToString().ToUpper()}] ");
