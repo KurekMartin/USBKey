@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text;
 using Usb.Events;
 
@@ -10,10 +11,27 @@ namespace USBKey
         private static Random _random = new();
         static void Main(string[] args)
         {
+            
             Console.OutputEncoding = Encoding.UTF8;
             Console.ForegroundColor = ConsoleColor.White;
             Console.CursorVisible = false;
+            
             Settings.Load();
+
+            if(Settings.Loaded)
+            {
+                if (Settings.Maximize)
+                {
+                    Maximize();
+                }
+                Logger.Log(LogType.Info, "Settings loaded");
+            }
+            else
+            {
+                Logger.Log(LogType.Error, "Settings not loaded");
+                Environment.Exit(0);
+            }
+            
 
             if (Settings.Seed is not null)
             {
@@ -120,6 +138,39 @@ namespace USBKey
             {
                 Logger.Log(LogType.Error, "Chyba čtení");
             }
+        }
+        // Structure used by GetWindowRect
+        struct Rect
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+        }
+        private static void Maximize()
+        {
+            // Import the necessary functions from user32.dll
+            [DllImport("user32.dll")]
+            static extern IntPtr GetForegroundWindow();
+            [DllImport("user32.dll")]
+            static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+            [DllImport("user32.dll")]
+            static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
+            [DllImport("user32.dll")]
+            static extern bool MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, bool bRepaint);
+            // Constants for the ShowWindow function
+            const int SW_MAXIMIZE = 3;
+            // Get the handle of the console window
+            IntPtr consoleWindowHandle = GetForegroundWindow();
+            // Maximize the console window
+            ShowWindow(consoleWindowHandle, SW_MAXIMIZE);
+            // Get the screen size
+            Rect screenRect;
+            GetWindowRect(consoleWindowHandle, out screenRect);
+            // Resize and reposition the console window to fill the screen
+            int width = screenRect.Right - screenRect.Left;
+            int height = screenRect.Bottom - screenRect.Top;
+            MoveWindow(consoleWindowHandle, screenRect.Left, screenRect.Top, width, height, true);
         }
     }
 }
