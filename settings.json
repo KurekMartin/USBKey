@@ -3,5 +3,56 @@
     "Keys": {
         "Correct": "cky",
         "Troll": "tky"
-    }    
+    },
+    "Seed": 123,
+    "Stages": [
+        {
+            "Type": "Message",
+            "Duration": 100,
+            "Text": "Test message"
+        },
+        {
+            "Type": "Message",
+            "Duration": 500,
+            "Text": "Test message 2"
+        },
+        {
+            "Type": "Message",
+            "Duration": 700,
+            "Text": "Test message 3"
+        },
+        {
+            "Type": "Progress",
+            "Duration": 5000,
+            "Text": "Test progress",
+            "StepDurationVariance": 1,
+            "StepProgressVariance": 1,
+            "ProgressBarLength": 20,
+            "MaxStepCount": 5
+        },
+        {
+            "Type": "Message",
+            "Duration": 250,
+            "Text": "Test message 4"
+        },
+        {
+            "Type": "Message",
+            "Duration": 150,
+            "Text": "Test message 5"
+        },
+        {
+            "Type": "Message",
+            "Duration": 300,
+            "Text": "Test message 6"
+        },
+        {
+            "Type": "Progress",
+            "Duration": 10000,
+            "Text": "Test progress",
+            "StepDurationVariance": 0.5,
+            "StepProgressVariance": 0.5,
+            "ProgressBarLength": 40,
+            "MaxStepCount": 20
+        }
+    ]
 }
