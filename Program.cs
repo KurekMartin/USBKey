@@ -140,6 +140,21 @@ namespace USBKey
                 else if (data.Key == Settings.Keys.Troll)
                 {
                     Logger.Log(LogType.Info, Settings.Messages.TrollKey);
+                    if (Settings.ShowTrollVideo && !string.IsNullOrEmpty(Settings.TrollVideoFileName))
+                    {
+                        DirectoryInfo dir = new(Directory.GetCurrentDirectory());
+                        var videoFile = dir.EnumerateFiles(Settings.TrollVideoFileName, SearchOption.AllDirectories).FirstOrDefault();
+                        if (videoFile != null)
+                        {
+                            new Process
+                            {
+                                StartInfo = new ProcessStartInfo(videoFile.FullName)
+                                {
+                                    UseShellExecute = true
+                                }
+                            }.Start();
+                        }
+                    }
                 }
                 else
                 {
