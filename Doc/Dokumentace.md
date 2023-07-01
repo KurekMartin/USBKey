@@ -1,0 +1,102 @@
+# Dokumentace USBKey
+Pro správnou funkčnost je potřeba ve složce s programem vytvořit soubor `settings.json` a na USB disku mít soubor s daty (v základu `data.json`). Program je potřeba nejprve spustit a poté vložit USB disk.
+
+## Struktura `data.json`
+- `Key` - `string`
+  - hodnota klíče
+  - v základu možnosti:
+    - `cky` - správný klíč
+    - `tky` - špatný klíč - spuštění videa nebo vypsání hlášky **TODO**
+    - je možné definovat v souboru `settings.json`
+
+## Struktura `settings.json`
+- `DataFileName` - `string`
+  - nepovinné - základní hodnota `data`
+  - název souboru s daty na USB disku
+- `Keys`
+  - možnost nastavení klíčů, aby nebylo zřejmé, zda se jedná o správný USB disk v případě, že by byl umožněn přístup k PC a někdo se chtěl podívat, co v souboru je
+  - `Correct` - `string`
+    - nepovinné - základní hodnota `cky`
+    - hodnota správného klíče v souboru `data`
+  - `Troll` - `string`
+    - nepovinné - základní hodnota `tky`
+    - hodnota špatného klíče - spuštění videa nebo vypsání hlášky **TODO**
+- `Maximize` - `bool`
+  - nepovinné základní hodnota `false`
+  - určuje, zda se má okno zvětšit přes celou obrazovku
+- `Seed` - `int`
+  - nepovinné
+  - v případě uvedení hodnoty se použije jako seed pro generování náhodných čísel - jinak je seed náhodný
+- `Stages` - `pole`
+  - nepovinné
+  - při prázdném seznamu se ihned po vložení USB zobrazí finální zpráva
+  - seznam zpráv, které se mají postupně zobrazit
+  - definice zpráv:
+    - `Type` - `string`
+      - možnost `Message` | `Progress`
+      - určuje typ zprávy
+        - `Message` - pouze zobrazí zprávu a poté počká určitou dobu
+        - `Progress` - zobrazí zprávu s progress barem, který se postupně načítá a poté zobrazí `✓`
+    - `Text` - `string`
+      - text, který se vypíše
+    - `Duration` - `int` (>=0)
+      - celkové trvání aktuální fáze v `ms`
+    - `MaxStepCount` - `byte` (1-100)
+      - pouze pro typ `Progress`
+      - určuje maximální počet kroků nutný k dokončení fáze
+    - `ProgressBarLength` - `int` (>=10)
+      - nepovinné - základní hodnota `30`
+      - délka progress baru ve znacích
+      - maximální délka se nastaví podle šířky okna
+    - `StepDurationVariance` - `float` (0-1)
+      - pouze pro typ `Progress`
+      - určuje jak moc se může lišit délka čekání u jednotlivých kroků (počítá se náhodně)
+        - základní délka jednoho kroku se vypočítá jako `Duration/MaxStepCount`
+        - `0` - všechny kroky stejné
+        - `0.5` - krok může trvat `0.5*ZákladníDélkaKroku - 1.5*ZákladníDélkaKroku ms`
+        - `1` - krok může trvat `0 - 2*ZákladníDélkaKroku` `ms`
+    - `StepProgressVariance` - `float` (0-1)
+      - pouze pro typ `Progress`
+      - určuje jak moc se může lišit hodnota, o kterou se v jednolitých krocích pohne progress bar
+        - základní hodnota kroku `100/MaxStepCount`
+        - `0` - všechny kroky stejné
+        - `0.5` - může se přičíst hodnota `0.5*ZákladníHodnotaKroku - 1.5*ZákladníHodnotaKroku`
+        - `1` - může se přičíst hodnota `1 - 2*ZákladníHodnotaKroku`
+- `Messages`
+  - zprávy a chybové hlášky
+  - nepovinné (v základu anglicky)
+  - `SettingsLoaded`
+    - úspěšné načtení nastavení
+    - základní hodnota "*Settings loaded*"
+  - `SettingsLoadError` 
+    - neúspěšné načtení nastavení
+    - základní hodnota "*Settings not loaded correctly*"
+  - `Welcome` 
+    - uvítací zpráva - zobrazí se při spuštění programu
+    - základní hodnota " "
+  - `InsertUSB` 
+    - zpráva pro vložení USB
+    - základní hodnota "*Insert USB key *"
+  - `CorrectKey` 
+    - zpráva po vložení správného klíče
+    - základní hodnota "*Well done, this is the right key*"
+  - `TrollKey` 
+    - zpráva po vložení troll klíče
+    - základní hodnota "*LOL, you've got the wrong key*"
+  - `IncorrectKey` 
+    - zpráva po vložení jiného klíče, než jsou definované hodnoty
+    - základní hodnota "*This is not the right key*"
+  - `ReadError` 
+    - chyba čtení z USB
+    - základní hodnota "*Cannot read data from USB key*"
+  - `FileNotFound` 
+    - soubor nenalezen
+    - za `{0}` se dosadí název souboru
+    - základní hodnota "*File {0} not found*"
+  - `KeyNotFound` 
+    - Hodnota pro klíč v souboru s daty nebyla nalezena
+    - základní hodnota "*Key not found*"
+  - `DataReadError` 
+    - chyba čtení datového souboru
+    - za `{0}` se dosadí název souboru
+    - základní hodnota "*Error while reading data from {0}*"

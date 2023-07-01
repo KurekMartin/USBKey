@@ -4,6 +4,7 @@
         "Correct": "cky",
         "Troll": "tky"
     },
+    "Maximize": true,
     "Seed": 123,
     "Stages": [
         {
@@ -13,7 +14,7 @@
         },
         {
             "Type": "Message",
-            "Duration": 500,
+            "Duration": 5000,
             "Text": "Test message 2"
         },
         {
@@ -27,7 +28,7 @@
             "Text": "Test progress",
             "StepDurationVariance": 1,
             "StepProgressVariance": 1,
-            "ProgressBarLength": 20,
+            "ProgressBarLength": 20000,
             "MaxStepCount": 5
         },
         {
@@ -54,5 +55,18 @@
             "ProgressBarLength": 40,
             "MaxStepCount": 20
         }
-    ]
+    ],
+    "Messages": {
+        "SettingsLoaded": "Nastavení úspěšně načteno",
+        "SettingsLoadError": "Chyba při načítání nastavení",
+        "Welcome": "",
+        "InsertUSB": "Vložte USB klíč ",
+        "CorrectKey": "Výborně, našel jsi správný klíč",
+        "TrollKey": "LOL, byl jsi napálen :D",
+        "IncorrectKey": "Tenhle klíč to není",
+        "ReadError": "Chyba čtení dat z USB klíče",
+        "FileNotFound": "Soubor {0} nenalezen",
+        "KeyNotFound": "Klíč nenalezen",
+        "DataReadError": "Chyba čtení dat z {0}"
+    }
 }
