@@ -15,6 +15,11 @@ namespace USBKey
             Console.CursorVisible = false;
             Settings.Load();
 
+            if (Settings.Seed is not null)
+            {
+                _random = new Random((int)Settings.Seed);
+            }
+
             Console.Write("Vložte USB klíč ");
             _waitingElement.Show();
 
@@ -45,14 +50,6 @@ namespace USBKey
                         break;
                 }
             }
-
-
-            ProgressBar progressBar = new(30, "SampleTask");
-            do
-            {
-                progressBar.Value += _random.Next(10);
-                Thread.Sleep(_random.Next(1000));
-            } while (progressBar.Value != 100);
             ProcessData(data);
         }
 
@@ -64,26 +61,42 @@ namespace USBKey
 
         static void ProcessProgress(Stage stage)
         {
+#if DEBUG
+            Console.WriteLine($"Type: {stage.Type} | Duration: {stage.Duration}ms | ProgressBarLen: {stage.ProgressBarLength}");
+            Stopwatch sw = Stopwatch.StartNew();
+#endif
             ProgressBar progressBar = new(stage.ProgressBarLength, stage.Text);
+            int stepDuration = stage.Duration / stage.MaxStepCount;
+            int stepDurationVariance = (int)(stepDuration * stage.StepDurationVariance);
+            int stepProgress = 100 / stage.MaxStepCount;
+            int stepProgressVariance = (int)(stepProgress * stage.StepProgressVariance);
             int totalDuration = 0;
             do
             {
-                if (totalDuration < stage.Duration)
-                {
-                    var durationVariance = _random.Next(-stage.StepDurationVariance, stage.StepDurationVariance);
-                    var duration = Math.Max(stage.StepDuration + durationVariance, 0);
-                    var step = _random.Next(1, stage.MaxStep);
+                var durationVariance = _random.Next(-stepDurationVariance, stepDurationVariance);
+                var duration = Math.Max(stepDuration + durationVariance, 0);
+                var stepVariance = _random.Next(-stepProgressVariance, stepProgressVariance);
+                var step = Math.Max(stepProgress + stepVariance, 1);
 
-                    progressBar.Value += step;
-                    Thread.Sleep(duration);
-
-                    totalDuration += duration;
-                }
-                else
+                if (totalDuration + duration > stage.Duration) // limit max duration
                 {
-                    progressBar.Value = 100;
+                    duration = stage.Duration - totalDuration;
+                    step = 100 - progressBar.Value;
                 }
+                else if (progressBar.Value + step >= 100 && totalDuration + duration < stage.Duration) // done sooner than Duration
+                {
+                    duration = stage.Duration - totalDuration;
+                }
+
+                progressBar.Value += step;
+                Thread.Sleep(duration);
+
+                totalDuration += duration;
             } while (progressBar.Value != 100);
+#if DEBUG
+            sw.Stop();
+            Console.WriteLine($"Total duration: {totalDuration}ms | Real duration: {sw.ElapsedMilliseconds}ms");
+#endif
         }
 
         static void ProcessData(Data? data)
