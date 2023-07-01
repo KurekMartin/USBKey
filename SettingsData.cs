@@ -11,7 +11,6 @@ namespace USBKey
         public Keys Keys = new();
         public int? Seed;
         public bool Maximize = false;
-        [JsonProperty(Required = Required.Always)]
         public Stage[] Stages = Array.Empty<Stage>();
         public Messages Messages = new Messages();
     }
