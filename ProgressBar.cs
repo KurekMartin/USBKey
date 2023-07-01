@@ -49,7 +49,7 @@ namespace USBKey
 
             if(Value == 100)
             {
-                Thread.Sleep(200);
+                Thread.Sleep(1000);
                 ConsoleUtil.ClearCurrentLine();
                 Console.Write(_taskName);
                 Console.ForegroundColor = ConsoleColor.Green;
