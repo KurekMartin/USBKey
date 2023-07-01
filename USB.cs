@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+﻿using Newtonsoft.Json;
 
 namespace USBKey
 {
@@ -34,8 +34,11 @@ namespace USBKey
             Data? data = null;
             try
             {
-                using FileStream dataFile = File.OpenRead(path);
-                data = JsonSerializer.Deserialize<Data>(dataFile, Settings.jsonOptions);
+                var dataFile = File.ReadAllText(path);
+                data = JsonConvert.DeserializeObject<Data>(dataFile, new JsonSerializerSettings
+                {
+                    MissingMemberHandling = MissingMemberHandling.Error,
+                });
             }
             catch (Exception ex)
             {
