@@ -1,12 +1,12 @@
 # Dokumentace USBKey
-Pro správnou funkčnost je potřeba ve složce s programem vytvořit soubor `settings.json` a na USB disku mít soubor s daty (v základu `data.json`). Program je potřeba nejprve spustit a poté vložit USB disk.
+Pro správnou funkčnost je potřeba ve složce s programem vytvořit soubor `settings.json` ve složce programem a na USB disku mít soubor s daty (v základu `data.json`). Program je potřeba nejprve spustit a poté vložit USB disk.
 
 ## Struktura `data.json`
 - `Key` - `string`
   - hodnota klíče
   - v základu možnosti:
     - `cky` - správný klíč
-    - `tky` - špatný klíč - spuštění videa nebo vypsání hlášky **TODO**
+    - `tky` - špatný klíč - vypíše hlášku a volitelně může i zobrazit video
     - je možné definovat v souboru `settings.json`
 
 ## Struktura `settings.json`
@@ -20,13 +20,20 @@ Pro správnou funkčnost je potřeba ve složce s programem vytvořit soubor `se
     - hodnota správného klíče v souboru `data`
   - `Troll` - `string`
     - nepovinné - základní hodnota `tky`
-    - hodnota špatného klíče - spuštění videa nebo vypsání hlášky **TODO**
+    - hodnota špatného klíče - vypíše hlášku a volitelně může i zobrazit video
 - `Maximize` - `bool`
-  - nepovinné základní hodnota `false`
+  - nepovinné - základní hodnota `false`
   - určuje, zda se má okno zvětšit přes celou obrazovku
 - `Seed` - `int`
   - nepovinné
   - v případě uvedení hodnoty se použije jako seed pro generování náhodných čísel - jinak je seed náhodný
+- `ShowTrollVideo` - `bool`
+  - nepovinné - základní hodnota `false`
+  - nastavení zobrazení videa
+- `TrollVideoFileName` - `string`
+  - nepovinné
+  - název souboru s videem, které se má spustit
+  - video může být umístěné kdekoliv ve složce, ze které se spouští program
 - `Stages` - `pole`
   - nepovinné
   - při prázdném seznamu se ihned po vložení USB zobrazí finální zpráva
