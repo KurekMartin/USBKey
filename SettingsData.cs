@@ -1,17 +1,21 @@
-﻿using System.CodeDom;
+﻿
+
+using Newtonsoft.Json.Converters;
+using System.Text.Json.Serialization;
 
 namespace USBKey
 {
     internal class SettingsData
     {
-        public string DataFileName { get; set; } = "data";
-        public Keys Keys { get; set; } = new();
-        public Stage[] Stages { get; set; } = Array.Empty<Stage>();
+        public string DataFileName = "data";
+        public Keys Keys = new();
+        public int? Seed;
+        public Stage[] Stages = Array.Empty<Stage>();
     }
     internal class Keys
     {
-        public string Correct { get; set; } = "cky";
-        public string Troll { get; set; } = "tky";
+        public string Correct = "cky";
+        public string Troll = "tky";
     }
     public enum StageType
     {
@@ -19,8 +23,9 @@ namespace USBKey
     }
     internal class Stage
     {
-        public StageType Type { get; set; } = StageType.Message;
-        public string Text { get; set; } = string.Empty;
+        [JsonConverter(typeof(StringEnumConverter))]
+        public StageType Type = StageType.Message;
+        public string Text = string.Empty;
         private int _duration = 1000;
         public int Duration
         {
@@ -30,22 +35,22 @@ namespace USBKey
                 _duration = Math.Max(value, 0);
             }
         }
-        private int _stepDuration = 100;
-        public int StepDuration
-        {
-            get => _stepDuration;
-            set
-            {
-                _stepDuration = Math.Max(value, 1);
-            }
-        }
-        private int _stepDurationVariance = 0;
-        public int StepDurationVariance
+        private float _stepDurationVariance = 0;
+        public float StepDurationVariance
         {
             get => _stepDurationVariance;
             set
             {
-                _stepDurationVariance = Math.Max(value, 0);
+                _stepDurationVariance = Math.Clamp(value, 0, 1);
+            }
+        }
+        private float _stepProgressVariance = 0;
+        public float StepProgressVariance
+        {
+            get => _stepProgressVariance;
+            set
+            {
+                _stepProgressVariance = Math.Clamp(value, 0, 1);
             }
         }
         private byte _progressBarLength = 30;
@@ -57,13 +62,13 @@ namespace USBKey
                 _progressBarLength = Math.Max(value, (byte)10);
             }
         }
-        private byte _maxStep = 10;
-        public byte MaxStep
+        private byte _maxStepCount = 10;
+        public byte MaxStepCount
         {
-            get => _maxStep;
+            get => _maxStepCount;
             set
             {
-                _maxStep = Math.Max(value, (byte)1);
+                _maxStepCount = Math.Max(value, (byte)1);
             }
         }
 

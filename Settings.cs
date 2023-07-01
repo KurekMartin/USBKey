@@ -1,10 +1,11 @@
-﻿using System.Text.Json;
+﻿using Newtonsoft.Json;
+
 
 namespace USBKey
 {
     internal static class Settings
     {
-        public static readonly JsonSerializerOptions jsonOptions = new()
+        public static readonly System.Text.Json.JsonSerializerOptions jsonOptions = new()
         {
             PropertyNameCaseInsensitive = true
         };
@@ -12,6 +13,7 @@ namespace USBKey
         private static SettingsData _optionsData = new();
         public static string DataFileName { get => _optionsData.DataFileName; }
         public static Keys Keys { get => _optionsData.Keys; }
+        public static int? Seed { get => _optionsData.Seed; }
         public static Stage[] Stages { get => _optionsData.Stages; }
         public static void Load()
         {
@@ -22,8 +24,9 @@ namespace USBKey
             {
                 try
                 {
-                    using FileStream optionsStream = File.OpenRead(settingsfile.FullName);
-                    var loadedDptions = JsonSerializer.Deserialize<SettingsData>(optionsStream, jsonOptions);
+                    using StreamReader optionsStream = File.OpenText(settingsfile.FullName);
+                    JsonSerializer serializer = new();
+                    var loadedDptions = (SettingsData?)serializer.Deserialize(optionsStream, typeof(SettingsData));
                     if (loadedDptions is not null)
                     {
                         _optionsData = loadedDptions;
