@@ -13,12 +13,7 @@
             {
                 if (_value != value)
                 {
-                    if (value < 0)
-                        _value = 0;
-                    else if (value > 100)
-                        _value = 100;
-                    else
-                        _value = value;
+                    _value = Math.Clamp(value, 0, 100);
                     Draw();
                 }
             }
