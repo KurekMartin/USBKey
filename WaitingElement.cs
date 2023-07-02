@@ -55,14 +55,5 @@ namespace USBKey
         {
             Loop(token);
         }
-
-        //public void Stop()
-        //{
-        //    Token.ca
-        //    while (_running) {
-        //        Console.WriteLine("Waiting for stop");
-        //    }
-        //}
-
     }
 }
