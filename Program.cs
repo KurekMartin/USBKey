@@ -38,8 +38,7 @@ namespace USBKey
                 _random = new Random((int)Settings.Seed);
             }
 
-            Console.Write(Settings.Messages.InsertUSB);
-            _waitingElement.Show();
+            StartMessage();
 
             using IUsbEventWatcher usbEventWatcher = new UsbEventWatcher();
             Data? data = null;
@@ -50,7 +49,25 @@ namespace USBKey
                 MainLoop(data);
             };
 
-            while (true) { };
+            while (true)
+            {
+                var key = Console.ReadKey();
+                if (key.Key == ConsoleKey.R && key.Modifiers == ConsoleModifiers.Control)
+                {
+                    if (_waitingElement.Running)
+                    {
+                        _waitingElement.Stop();
+                    }
+                    Console.Clear();
+                    StartMessage();
+                }
+            };
+        }
+
+        static void StartMessage()
+        {
+            Console.Write(Settings.Messages.InsertUSB);
+            _waitingElement.Show();
         }
 
         static void MainLoop(Data? data)
