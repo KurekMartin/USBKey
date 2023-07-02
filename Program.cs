@@ -24,7 +24,6 @@ namespace USBKey
                 {
                     Maximize();
                 }
-                Logger.Log(LogType.Info, Settings.Messages.SettingsLoaded);
             }
             else
             {
@@ -65,7 +64,16 @@ namespace USBKey
         }
 
         static void StartMessage()
-        {
+        {            
+            if (Settings.Loaded)
+            {
+                if (!string.IsNullOrEmpty(Settings.Messages.Welcome))
+                {
+                    Console.Write(Settings.Messages.Welcome);
+                }
+                Logger.Log(LogType.Info, Settings.Messages.SettingsLoaded);
+            }
+
             Console.Write(Settings.Messages.InsertUSB);
             _waitingElement.Show();
         }
