@@ -8,6 +8,7 @@ namespace USBKey
     class Program
     {
         private static readonly WaitingElement _waitingElement = new();
+        private static CancellationTokenSource _cancellationTokenSource = new();
         private static Random _random = new();
         static void Main(string[] args)
         {
@@ -43,8 +44,7 @@ namespace USBKey
             Data? data = null;
             usbEventWatcher.UsbDriveMounted += (_, path) =>
             {
-                data = USB.GetDataFromDrive(path);
-                _waitingElement.Stop();
+                data = USB.GetDataFromDrive(path);                
                 MainLoop(data);
             };
 
@@ -55,7 +55,7 @@ namespace USBKey
                 {
                     if (_waitingElement.Running)
                     {
-                        _waitingElement.Stop();
+                        _cancellationTokenSource.Cancel();
                     }
                     Console.Clear();
                     StartMessage();
@@ -64,7 +64,8 @@ namespace USBKey
         }
 
         static void StartMessage()
-        {            
+        {
+            
             if (Settings.Loaded)
             {
                 if (!string.IsNullOrEmpty(Settings.Messages.Welcome))
@@ -75,12 +76,13 @@ namespace USBKey
             }
 
             Console.Write(Settings.Messages.InsertUSB);
-            _waitingElement.Show();
+            _cancellationTokenSource = new CancellationTokenSource();
+            _waitingElement.Show(_cancellationTokenSource.Token);
         }
 
         static void MainLoop(Data? data)
         {
-
+            _cancellationTokenSource.Cancel();
             foreach (var stage in Settings.Stages)
             {
 #if DEBUG
@@ -111,10 +113,11 @@ namespace USBKey
 
             if (showWaitAnim)
             {
-                _waitingElement.Show();
+                _cancellationTokenSource = new CancellationTokenSource();
+                _waitingElement.Show(_cancellationTokenSource.Token);
             }
             Thread.Sleep(stage.Duration);
-            _waitingElement.Stop();
+            _cancellationTokenSource.Cancel();
             if (!showWaitAnim)
             {
                 Console.WriteLine();

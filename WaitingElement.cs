@@ -1,10 +1,11 @@
 ﻿
+using System.Diagnostics;
+
 namespace USBKey
 {
     internal class WaitingElement
     {
         private readonly string[] _steps = { "◝", "◞", "◟", "◜" };
-        private bool _stop = false;
         private bool _running = false;
         private int _stepDuration;
         public int StepDuration
@@ -21,7 +22,7 @@ namespace USBKey
             _stepDuration = stepDuration;
         }
 
-        private void Loop()
+        private async void Loop(CancellationToken token)
         {
             var cursorStartPos = Console.CursorLeft;
             int step = 0;
@@ -31,8 +32,15 @@ namespace USBKey
                 Console.Write(_steps[step]);
                 step = (step + 1) % _steps.Length;
                 Console.CursorLeft = cursorStartPos;
-                Thread.Sleep(_stepDuration);
-            } while (!_stop);
+                try
+                {
+                    await Task.Delay(_stepDuration, token);
+                }
+                catch
+                {
+                    break;
+                }
+            } while (!token.IsCancellationRequested);
             Console.Write(new string(' ', Console.WindowWidth - cursorStartPos));
             Console.WriteLine();
             _running = false;
@@ -40,20 +48,21 @@ namespace USBKey
 
         public bool Running
         {
-            get => _running && !_stop;
+            get => _running;
         }
 
-        public void Show()
+        public void Show(CancellationToken token)
         {
-            _stop = false;
-            Task.Run(() => { Loop(); });
+            Loop(token);
         }
 
-        public void Stop()
-        {
-            _stop = true;
-            while (_running) { }
-        }
+        //public void Stop()
+        //{
+        //    Token.ca
+        //    while (_running) {
+        //        Console.WriteLine("Waiting for stop");
+        //    }
+        //}
 
     }
 }
