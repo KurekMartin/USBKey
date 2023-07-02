@@ -50,6 +50,8 @@ namespace USBKey
             else
             {
                 Logger.Log(LogType.Error, string.Format(Messages.FileNotFound, _fileName));
+                Console.WriteLine("Press any key to exit");
+                Console.ReadKey();
                 Environment.Exit(0);
             }
         }

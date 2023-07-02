@@ -29,6 +29,8 @@ namespace USBKey
             else
             {
                 Logger.Log(LogType.Error, Settings.Messages.SettingsLoadError);
+                Console.WriteLine("Press any key to exit");
+                Console.ReadKey();
                 Environment.Exit(0);
             }
 
