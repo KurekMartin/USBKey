@@ -6,9 +6,9 @@
     }
     internal static class Logger
     {
-        public static void Log(LogType type, string message)
+        public static void Log(LogType type, string message, ConsoleColor? color = null)
         {
-            var color = Console.ForegroundColor;
+            var oldColor = Console.ForegroundColor;
             switch (type)
             {
                 case LogType.Info:
@@ -24,9 +24,21 @@
                     Console.ForegroundColor = ConsoleColor.Gray;
                     break;
             }
+
             Console.Write($"[{type.ToString().ToUpper()}] ");
-            Console.ForegroundColor = color;
+
+            if (color != null)
+            {
+                Console.ForegroundColor = (ConsoleColor)color;
+            }
+            else
+            {
+                Console.ForegroundColor = oldColor;
+            }
+                        
             Console.WriteLine(message);
+
+            Console.ForegroundColor = oldColor;
         }
     }
 }

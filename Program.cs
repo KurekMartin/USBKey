@@ -135,11 +135,11 @@ namespace USBKey
             {
                 if (data.Key == Settings.Keys.Correct)
                 {
-                    Logger.Log(LogType.Info, Settings.Messages.CorrectKey);
+                    Logger.Log(LogType.Info, Settings.Messages.CorrectKey, ConsoleColor.Green);
                 }
                 else if (data.Key == Settings.Keys.Troll)
                 {
-                    Logger.Log(LogType.Info, Settings.Messages.TrollKey);
+                    Logger.Log(LogType.Info, Settings.Messages.TrollKey, ConsoleColor.Red);
                     if (Settings.ShowTrollVideo && !string.IsNullOrEmpty(Settings.TrollVideoFileName))
                     {
                         DirectoryInfo dir = new(Directory.GetCurrentDirectory());
@@ -158,7 +158,7 @@ namespace USBKey
                 }
                 else
                 {
-                    Logger.Log(LogType.Info, Settings.Messages.IncorrectKey);
+                    Logger.Log(LogType.Info, Settings.Messages.IncorrectKey, ConsoleColor.Red);
                 }
             }
             else
