@@ -1,5 +1,5 @@
 # Dokumentace USBKey
-Program pro 
+Program po vložení USB disku načte data, zobrazí předdefinované zprávy a poté zobrazí výslednou zprávu podle správnosti klíče.  
 Pro správnou funkčnost je potřeba ve složce s programem vytvořit soubor `settings.json` a na USB disku mít soubor s daty (v základu `data.json`). Program je potřeba nejprve spustit a poté vložit USB disk.
 
 <kbd>Ctrl</kbd>+<kbd>R</kbd> - reset programu
