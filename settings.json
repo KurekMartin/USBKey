@@ -10,61 +10,114 @@
     "Seed": 123,
     "Stages": [
         {
-            "Type": "Message",
-            "Duration": 100,
-            "Text": "Test message"
-        },
-        {
-            "Type": "Message",
-            "Duration": 5000,
-            "Text": "Test message 2"
-        },
-        {
-            "Type": "Message",
-            "Duration": 700,
-            "Text": "Test message 3"
-        },
-        {
             "Type": "Progress",
             "Duration": 5000,
-            "Text": "Test progress",
-            "StepDurationVariance": 1,
-            "StepProgressVariance": 1,
-            "ProgressBarLength": 20000,
-            "MaxStepCount": 5
+            "Text": "Načítání konfigurace",
+            "StepDurationVariance": 0.2,
+            "StepProgressVariance": 0.75,
+            "ProgressBarLength": 40,
+            "MaxStepCount": 10
         },
         {
             "Type": "Message",
-            "Duration": 250,
-            "Text": "Test message 4"
+            "Duration": 100,
+            "Text": "Načtena konfigurace antiviru"
         },
         {
             "Type": "Message",
-            "Duration": 150,
-            "Text": "Test message 5"
+            "Duration": 3000,
+            "Text": "Hledání disků"
         },
         {
             "Type": "Message",
-            "Duration": 300,
-            "Text": "Test message 6"
+            "Duration": 200,
+            "Text": "Disky nalezeny"
+        },
+        {
+            "Type": "Message",
+            "Duration": 5000,
+            "Text": "Zahřívání disků"
+        },
+        {
+            "Type": "Message",
+            "Duration": 100,
+            "Text": "Disky zahřáty na požadovanou teplotu"
+        },
+        {
+            "Type": "Message",
+            "Duration": 3000,
+            "Text": "Zahřívání paměti"
+        },
+        {
+            "Type": "Message",
+            "Duration": 100,
+            "Text": "Paměť zahřáta na požadovanou teplotu"
+        },
+        {
+            "Type": "Message",
+            "Duration": 4000,
+            "Text": "Zahřívání procesoru"
+        },
+        {
+            "Type": "Message",
+            "Duration": 100,
+            "Text": "Procesor zahřátý na požadovanou teplotu"
         },
         {
             "Type": "Progress",
             "Duration": 10000,
-            "Text": "Test progress",
-            "StepDurationVariance": 0.5,
-            "StepProgressVariance": 0.5,
-            "ProgressBarLength": 40,
-            "MaxStepCount": 20
+            "Text": "Sbírání bajtů z disku",
+            "StepDurationVariance": 1,
+            "StepProgressVariance": 1,
+            "ProgressBarLength": 30,
+            "MaxStepCount": 10
+        },
+        {
+            "Type": "Message",
+            "Duration": 3000,
+            "Text": "Skládání nalezených bajtů"
+        },
+        {
+            "Type": "Message",
+            "Duration": 100,
+            "Text": "Bajty poskládány do řady"
+        },
+        {
+            "Type": "Progress",
+            "Duration": 6000,
+            "Text": "Kontrola bajtů",
+            "StepDurationVariance": 0,
+            "StepProgressVariance": 0,
+            "ProgressBarLength": 10,
+            "MaxStepCount": 10
+        },
+        {
+            "Type": "Message",
+            "Duration": 100,
+            "Text": "Bajty zkontrolovány"
+        },
+        {
+            "Type": "Message",
+            "Duration": 5000,
+            "Text": "Probíhá příprava na dešifrování disku"
+        },
+        {
+            "Type": "Progress",
+            "Duration": 15000,
+            "Text": "Pokus o dešifrování disku",
+            "StepDurationVariance": 1,
+            "StepProgressVariance": 1,
+            "ProgressBarLength": -1,
+            "MaxStepCount": 30
         }
     ],
     "Messages": {
         "SettingsLoaded": "Nastavení úspěšně načteno",
         "SettingsLoadError": "Chyba při načítání nastavení",        
         "InsertUSB": "Vložte USB klíč ",
-        "CorrectKey": "Výborně, našel jsi správný klíč",
+        "CorrectKey": "Gratuluji, dešifrování disku bylo úspěšné",
         "TrollKey": "LOL, byl jsi napálen :D",
-        "IncorrectKey": "Tenhle klíč to není",
+        "IncorrectKey": "Dešifrování dsiku se nezdařilo, zkus jiný klíč",
         "ReadError": "Chyba čtení dat z USB klíče",
         "FileNotFound": "Soubor {0} nenalezen",
         "KeyNotFound": "Klíč nenalezen",
