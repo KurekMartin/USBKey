@@ -15,6 +15,7 @@ namespace USBKey
         public Messages Messages = new();
         public bool ShowTrollVideo = false;
         public string TrollVideoFileName = string.Empty;
+        public bool SkipMessages = false;
     }
     internal class Keys
     {

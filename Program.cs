@@ -83,25 +83,28 @@ namespace USBKey
         static void MainLoop(Data? data)
         {
             _cancellationTokenSource.Cancel();
-            foreach (var stage in Settings.Stages)
+            if (!Settings.SkipMessages)
             {
+                foreach (var stage in Settings.Stages)
+                {
 #if DEBUG
                 Logger.Log(LogType.Debug, $"Type: {stage.Type} | Duration: {stage.Duration}ms | ProgressBarLen: {stage.ProgressBarLength}");
                 Stopwatch sw = Stopwatch.StartNew();
 #endif
-                switch (stage.Type)
-                {
-                    case StageType.Message:
-                        ProcessMessage(stage);
-                        break;
-                    case StageType.Progress:
-                        ProcessProgress(stage);
-                        break;
-                }
+                    switch (stage.Type)
+                    {
+                        case StageType.Message:
+                            ProcessMessage(stage);
+                            break;
+                        case StageType.Progress:
+                            ProcessProgress(stage);
+                            break;
+                    }
 #if DEBUG
                 sw.Stop();
                 Logger.Log(LogType.Debug, $"Real duration: {sw.ElapsedMilliseconds}ms");
 #endif
+                }
             }
             ProcessData(data);
         }

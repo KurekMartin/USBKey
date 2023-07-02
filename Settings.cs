@@ -19,6 +19,7 @@ namespace USBKey
         public static bool Maximize { get => _optionsData.Maximize; }
         public static bool ShowTrollVideo { get => _optionsData.ShowTrollVideo; }
         public static string TrollVideoFileName { get => _optionsData.TrollVideoFileName; }
+        public static bool SkipMessages { get => _optionsData.SkipMessages; }
         public static bool Loaded { get; private set; } = false;
         public static void Load()
         {
