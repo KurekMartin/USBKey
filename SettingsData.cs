@@ -63,7 +63,10 @@ namespace USBKey
             get => _progressBarLength;
             set
             {
-                _progressBarLength = Math.Max(value, 10);
+                if (value < 0)
+                    _progressBarLength = int.MaxValue;
+                else
+                    _progressBarLength = Math.Max(value, 10);
             }
         }
         private byte _maxStepCount = 10;
