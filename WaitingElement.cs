@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace USBKey
 {
     internal class WaitingElement
@@ -42,6 +36,11 @@ namespace USBKey
             Console.Write(new string(' ', Console.WindowWidth - cursorStartPos));
             Console.WriteLine();
             _running = false;
+        }
+
+        public bool Running
+        {
+            get => _running && !_stop;
         }
 
         public void Show()
