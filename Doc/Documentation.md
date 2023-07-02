@@ -1,5 +1,7 @@
 # Dokumentace USBKey
-Pro správnou funkčnost je potřeba ve složce s programem vytvořit soubor `settings.json` ve složce programem a na USB disku mít soubor s daty (v základu `data.json`). Program je potřeba nejprve spustit a poté vložit USB disk.
+Pro správnou funkčnost je potřeba ve složce s programem vytvořit soubor `settings.json` a na USB disku mít soubor s daty (v základu `data.json`). Program je potřeba nejprve spustit a poté vložit USB disk.
+
+<kbd>Ctrl</kbd>+<kbd>R</kbd> - reset programu
 
 ## Struktura `data.json`
 - `Key` - `string`
@@ -60,15 +62,15 @@ Pro správnou funkčnost je potřeba ve složce s programem vytvořit soubor `se
       - určuje jak moc se může lišit délka čekání u jednotlivých kroků (počítá se náhodně)
         - základní délka jednoho kroku se vypočítá jako `Duration/MaxStepCount`
         - `0` - všechny kroky stejné
-        - `0.5` - krok může trvat `0.5*ZákladníDélkaKroku - 1.5*ZákladníDélkaKroku ms`
-        - `1` - krok může trvat `0 - 2*ZákladníDélkaKroku` `ms`
+        - `0.5` - krok může trvat `0.5*ZákladníDélkaKroku ms` až `1.5*ZákladníDélkaKroku ms`
+        - `1` - krok může trvat `0 ms` až `2*ZákladníDélkaKroku` `ms`
     - `StepProgressVariance` - `float` (0-1)
       - pouze pro typ `Progress`
       - určuje jak moc se může lišit hodnota, o kterou se v jednolitých krocích pohne progress bar
         - základní hodnota kroku `100/MaxStepCount`
         - `0` - všechny kroky stejné
-        - `0.5` - může se přičíst hodnota `0.5*ZákladníHodnotaKroku - 1.5*ZákladníHodnotaKroku`
-        - `1` - může se přičíst hodnota `1 - 2*ZákladníHodnotaKroku`
+        - `0.5` - může se přičíst hodnota `0.5*ZákladníHodnotaKroku` až `1.5*ZákladníHodnotaKroku`
+        - `1` - může se přičíst hodnota `1` až `2*ZákladníHodnotaKroku`
 - `Messages`
   - zprávy a chybové hlášky
   - nepovinné (v základu anglicky)
@@ -83,7 +85,7 @@ Pro správnou funkčnost je potřeba ve složce s programem vytvořit soubor `se
     - základní hodnota " "
   - `InsertUSB` 
     - zpráva pro vložení USB
-    - základní hodnota "*Insert USB key *"
+    - základní hodnota "*Insert USB key*"
   - `CorrectKey` 
     - zpráva po vložení správného klíče
     - základní hodnota "*Well done, this is the right key*"
