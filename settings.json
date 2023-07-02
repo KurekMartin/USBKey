@@ -60,8 +60,7 @@
     ],
     "Messages": {
         "SettingsLoaded": "Nastavení úspěšně načteno",
-        "SettingsLoadError": "Chyba při načítání nastavení",
-        "Welcome": "",
+        "SettingsLoadError": "Chyba při načítání nastavení",        
         "InsertUSB": "Vložte USB klíč ",
         "CorrectKey": "Výborně, našel jsi správný klíč",
         "TrollKey": "LOL, byl jsi napálen :D",
@@ -69,6 +68,7 @@
         "ReadError": "Chyba čtení dat z USB klíče",
         "FileNotFound": "Soubor {0} nenalezen",
         "KeyNotFound": "Klíč nenalezen",
-        "DataReadError": "Chyba čtení dat z {0}"
+        "DataReadError": "Chyba čtení dat z {0}",
+        "Welcome": " █████╗ ███╗   ██╗████████╗██╗██╗   ██╗██╗██████╗     ██████╗  ██████╗  ██████╗  ██████╗ \n██╔══██╗████╗  ██║╚══██╔══╝██║██║   ██║██║██╔══██╗    ╚════██╗██╔═████╗██╔═████╗██╔═████╗\n███████║██╔██╗ ██║   ██║   ██║██║   ██║██║██████╔╝     █████╔╝██║██╔██║██║██╔██║██║██╔██║\n██╔══██║██║╚██╗██║   ██║   ██║╚██╗ ██╔╝██║██╔══██╗     ╚═══██╗████╔╝██║████╔╝██║████╔╝██║\n██║  ██║██║ ╚████║   ██║   ██║ ╚████╔╝ ██║██║  ██║    ██████╔╝╚██████╔╝╚██████╔╝╚██████╔╝\n╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═══╝  ╚═╝╚═╝  ╚═╝    ╚═════╝  ╚═════╝  ╚═════╝  ╚═════╝ \n"
     }
 }
