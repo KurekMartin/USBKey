@@ -1,4 +1,5 @@
 # Dokumentace USBKey
+Program pro 
 Pro správnou funkčnost je potřeba ve složce s programem vytvořit soubor `settings.json` a na USB disku mít soubor s daty (v základu `data.json`). Program je potřeba nejprve spustit a poté vložit USB disk.
 
 <kbd>Ctrl</kbd>+<kbd>R</kbd> - reset programu
@@ -36,6 +37,10 @@ Pro správnou funkčnost je potřeba ve složce s programem vytvořit soubor `se
   - nepovinné
   - název souboru s videem, které se má spustit
   - video může být umístěné kdekoliv ve složce, ze které se spouští program
+- `SkipMessages` - `bool`
+  - nepovinné - základní hodnota `false`
+  - možnost přeskočení zobrazení zpráv
+  - ideální pro testování, zda je na USB disku správný klíč
 - `Stages` - `pole`
   - nepovinné
   - při prázdném seznamu se ihned po vložení USB zobrazí finální zpráva
@@ -57,7 +62,9 @@ Pro správnou funkčnost je potřeba ve složce s programem vytvořit soubor `se
       - nepovinné - základní hodnota `30`
       - délka progress baru ve znacích
       - maximální délka se nastaví podle šířky okna
+      - možné zadat `-1` - vyplní celý řádek
     - `StepDurationVariance` - `float` (0-1)
+      - nepovinné - základní hodnota `0`
       - pouze pro typ `Progress`
       - určuje jak moc se může lišit délka čekání u jednotlivých kroků (počítá se náhodně)
         - základní délka jednoho kroku se vypočítá jako `Duration/MaxStepCount`
@@ -65,6 +72,7 @@ Pro správnou funkčnost je potřeba ve složce s programem vytvořit soubor `se
         - `0.5` - krok může trvat `0.5*ZákladníDélkaKroku ms` až `1.5*ZákladníDélkaKroku ms`
         - `1` - krok může trvat `0 ms` až `2*ZákladníDélkaKroku` `ms`
     - `StepProgressVariance` - `float` (0-1)
+      - nepovinné - základní hodnota `0`
       - pouze pro typ `Progress`
       - určuje jak moc se může lišit hodnota, o kterou se v jednolitých krocích pohne progress bar
         - základní hodnota kroku `100/MaxStepCount`
